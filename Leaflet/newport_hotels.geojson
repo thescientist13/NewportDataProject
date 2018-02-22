@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","features":[{"type": "Feature","geometry":{"type": "Point", "coordinates": [41.489865, -71.318022]}"properties": {"name": "Newport Marriott"}},{"type": "Feature","geometry": {"type": "Point", "coordinates": [41.488604, -71.314950] } "properties": {"name": "America's Cup Inn"}}]};
