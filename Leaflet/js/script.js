@@ -64,16 +64,29 @@ L.marker([51.5, -0.09], {icon: redMarker}).addTo(map);
 // nice leaflet-ajax plugin
 // https://github.com/calvinmetcalf/leaflet-ajax
 var items = [];
-var geojsonLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
-  onEachFeature: function(feature, layer) {
-    items.push(layer);
-    // layer.bindPopup('<h3>' + feature.properties.name + '</h3>');
+// var geojsonLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
+//   onEachFeature: function(feature, layer) {
+//     items.push(layer);
+//     // layer.bindPopup('<h3>' + feature.properties.name + '</h3>');
+//     layer.bindPopup("<strong>" + feature.properties.name + "</strong><br/>" +
+//                 feature.properties.street + "<br/>" +
+//                 feature.properties.city + ", " +
+//                 feature.properties.state
+//                 );
+//   }
+// });
+
+function newportHotels(feature, layer){
     layer.bindPopup("<strong>" + feature.properties.name + "</strong><br/>" +
-                feature.properties.street + "<br/>" +
-                feature.properties.city + ", " +
-                feature.properties.state
-                );
-  }
+                    feature.properties.street + "<br/>" +
+                    feature.properties.city + ", " +
+                    feature.properties.state
+                    );
+    layer.setIcon(blueMarker);
+}
+
+var geojsonLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
+  onEachFeature: newportHotels
 });
 
 geojsonLayer.addTo(map);
