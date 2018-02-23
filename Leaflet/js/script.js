@@ -4,8 +4,6 @@
 /*global onMapClick*/
 /*global L*/
 /*global $*/
-/*global polyline*/
-/*global latlng*/
 
 var map = L.map('map', {
     center: [41.488509, -71.315153],
@@ -18,22 +16,8 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18
 }).addTo(map);
 
-/*global map*/
-var popup = L.popup();
-
-// map.on('click', onMapClick);
-
-// function onMapClick(e) {
-//     popup
-//         .setLatLng(e.latlng)
-//         .setContent(e.latlng.toString())
-//         .openOn(map);
-// }
-
-
 // add markers
-
-// gren marker for hotels
+// green marker for hotels
 var blueMarker = new L.Icon({
   iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -42,20 +26,6 @@ var blueMarker = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
-
-L.marker([0,0], {icon: blueMarker}).addTo(map);
-
-// blue marker for sidewalks
-var greenMarker = new L.Icon({
-  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
-
-L.marker([0,0], {icon: greenMarker}).addTo(map);
 
 // red marker for Newport Crosswalk Safety Survey (2014) dataset
 // source https://github.com/NewportDataPortal/newport-crosswalk-survey-2014
@@ -67,10 +37,6 @@ var redMarker = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
-
-L.marker([0,0], {icon: redMarker}).addTo(map);
-
-
 
 // add some data
 // nice leaflet-ajax plugin
@@ -86,8 +52,6 @@ function newportHotels(feature, layer){
     layer.setIcon(blueMarker);
 }
 
-// .setContent(e.latlng.toString());
-
 var hotelsLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
   onEachFeature: newportHotels
 }).addTo(map);
@@ -95,7 +59,7 @@ var hotelsLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
 // Newport Crosswalk Safety Survey (2014) 
 // https://github.com/NewportDataPortal/newport-crosswalk-survey-2014
 function bpacSurvey2014(feature, layer){
-    layer.bindPopup("<table id='t01'>" +
+    layer.bindPopup("<table id='crosswalkSurvey'>" +
                         "<tr>" +
                             "<th colspan='2'>" +
                                 "<a href=https://github.com/NewportDataPortal/newport-crosswalk-survey-2014 target='_blank'>" +
@@ -142,8 +106,7 @@ var crosswalksLayer = L.geoJson.ajax('data/bpac_survey_2014.geojson', {
 
 
 // add sidewalks layer
-// npt-sidewalks.geojson is a map of all sidewalks.
-
+// npt-sidewalks.geojson is a map of sidewalks in Newport
 var sidewalks = [];
 
 var sidewalksLayer = L.geoJson.ajax('data/npt-sidewalks.geojson', {
@@ -152,22 +115,7 @@ var sidewalksLayer = L.geoJson.ajax('data/npt-sidewalks.geojson', {
   }
 }).addTo(map);
 
-
-
-// add legend for marker colors
-// var Legend =  new L.Control.Legend({
-//         position: 'topleft',
-//         collapsed: true,
-//         controlButton: {
-//             title: "Legend"
-//         }});
-// map.addControl( Legend );
- 
-// $(".legend-container").append( $("#legend") );
-// $(".legend-toggle").append( "<i class='legend-toggle-icon fa fa-info fa-2x' style='color: #000'></i>" );
-
 $(document).ready(function (e) {
-    $("#sidewalksButton").show();
     $("#sidewalksButton").click(function(){
         if(map.hasLayer(sidewalksLayer)){
             map.removeLayer(sidewalksLayer);
@@ -176,7 +124,6 @@ $(document).ready(function (e) {
         }
     });
     
-    $("#crosswalksButton").show();
     $("#crosswalksButton").click(function(){
         if(map.hasLayer(crosswalksLayer)){
             map.removeLayer(crosswalksLayer);
@@ -185,7 +132,6 @@ $(document).ready(function (e) {
         }
     });
     
-    $("#hotelsButton").show();
     $("#hotelsButton").click(function(){
         if(map.hasLayer(hotelsLayer)){
             map.removeLayer(hotelsLayer);
@@ -195,3 +141,42 @@ $(document).ready(function (e) {
     });
     e.preventDefault();
 })
+
+// commented out because this function is annoying, but useful
+// map.on('click', onMapClick);
+
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent(e.latlng.toString())
+//         .openOn(map);
+// }
+
+var legend = L.control({position: 'bottomright'});
+legend.onAdd = function(icon, legend){
+    var div = L.DomUtil.create('div', 'legend');
+    div.innerHTML += "<div>";
+    div.innerHTML += "<table class='coolTable' id='legend'>" +
+                        "<tr>" +
+                            "<th colspan='2' style='font-size:200%'>" +
+                                "Turn layers on/off" + 
+                            "</th>" +
+                        "</tr>" +
+                        "<tr onclick='hotelsButton.click()'>" +
+                            "<td>&nbsp;<img src='images/marker-icon-green.png' alt='Green marker icon' height='22' width='16'/></td>" + 
+                            "<td id='hotelsButton'>Hotels</td>" +
+                        "</tr>" +
+                        "<tr onclick='crosswalksButton.click()'>" +
+                            "<td>&nbsp;<img src='images/marker-icon-red.png'/ alt='Red marker icon' height='22' width='16'></td>" +
+                            "<td id='crosswalksButton'>Crosswalks&nbsp;</td>" +
+                        "</tr>" +
+                        "<tr id='sidewalksButton' onclick='sidewalksButton.click()'>" +
+                            "<td id='tinyText'>&nbsp;Blue<br/>&nbsp;lines&nbsp;&nbsp;</td>" +
+                            "<td>Sidewalks</td>" + 
+                        "</tr>" +
+                    "</table>"
+    div.innerHTML += "</div>";
+    
+    return div;
+    };
+legend.addTo(map);
