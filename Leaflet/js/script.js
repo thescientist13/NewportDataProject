@@ -3,17 +3,13 @@
 
 /*global onMapClick*/
 /*global L*/
-/*global newport_hotels*/
-/*global bpac_survey_2014*/
-
-
-// center: [41.489805, -71.318002],
 
 var map = L.map('map', {
     center: [41.488509, -71.315153],
     zoom: 15
 });
 
+// this is the map
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     maxZoom: 18
@@ -31,7 +27,7 @@ var blueMarker = new L.Icon({
   shadowSize: [41, 41]
 });
 
-L.marker([51.5, -0.09], {icon: blueMarker}).addTo(map);
+L.marker([0,0], {icon: blueMarker}).addTo(map);
 
 // green marker for walking
 var greenMarker = new L.Icon({
@@ -43,7 +39,7 @@ var greenMarker = new L.Icon({
   shadowSize: [41, 41]
 });
 
-L.marker([51.5, -0.09], {icon: greenMarker}).addTo(map);
+L.marker([0,0], {icon: greenMarker}).addTo(map);
 
 // red marker for Newport Crosswalk Safety Survey (2014) dataset
 // source https://github.com/NewportDataPortal/newport-crosswalk-survey-2014
@@ -56,7 +52,7 @@ var redMarker = new L.Icon({
   shadowSize: [41, 41]
 });
 
-L.marker([51.5, -0.09], {icon: redMarker}).addTo(map);
+L.marker([0,0], {icon: redMarker}).addTo(map);
 
 
 
@@ -77,20 +73,6 @@ function newportHotels(feature, layer){
 L.geoJson.ajax('data/newport_hotels.geojson', {
   onEachFeature: newportHotels
 }).addTo(map);
-
-
-/*
-id: 1,
-Safe: "17",
-Unsafe: "114",
-"I don't know.": "112",
-score: "0.1297709923664122",
-n: "131",
-size: "14.30131004366812"
-feature.properties.id + "<br/>" +
-feature.properties.Safe + "<br/>" +
-feature.properties.Unsafe
-*/
 
 // Newport Crosswalk Safety Survey (2014) 
 // https://github.com/NewportDataPortal/newport-crosswalk-survey-2014
@@ -139,3 +121,16 @@ function bpacSurvey2014(feature, layer){
 L.geoJson.ajax('data/bpac_survey_2014.geojson', {
   onEachFeature: bpacSurvey2014
 }).addTo(map);
+
+
+// add sidewalks layer
+// npt-sidewalks.geojson is a map of all sidewalks.
+var sidewalks = [];
+
+L.geoJson.ajax('data/npt-sidewalks.geojson', {
+  onEachFeature: function(data, layer) {
+    sidewalks.push(layer);
+  }
+}).addTo(map);
+
+
