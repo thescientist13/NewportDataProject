@@ -64,17 +64,6 @@ L.marker([51.5, -0.09], {icon: redMarker}).addTo(map);
 // nice leaflet-ajax plugin
 // https://github.com/calvinmetcalf/leaflet-ajax
 var items = [];
-// var geojsonLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
-//   onEachFeature: function(feature, layer) {
-//     items.push(layer);
-//     // layer.bindPopup('<h3>' + feature.properties.name + '</h3>');
-//     layer.bindPopup("<strong>" + feature.properties.name + "</strong><br/>" +
-//                 feature.properties.street + "<br/>" +
-//                 feature.properties.city + ", " +
-//                 feature.properties.state
-//                 );
-//   }
-// });
 
 function newportHotels(feature, layer){
     layer.bindPopup("<strong>" + feature.properties.name + "</strong><br/>" +
@@ -85,7 +74,7 @@ function newportHotels(feature, layer){
     layer.setIcon(blueMarker);
 }
 
-var geojsonLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
+L.geoJson.ajax('data/newport_hotels.geojson', {
   onEachFeature: newportHotels
 }).addTo(map);
 
@@ -103,12 +92,16 @@ feature.properties.Safe + "<br/>" +
 feature.properties.Unsafe
 */
 
-// function name similar to data file but must not be the same
+// Newport Crosswalk Safety Survey (2014) 
+// https://github.com/NewportDataPortal/newport-crosswalk-survey-2014
 function bpacSurvey2014(feature, layer){
     layer.bindPopup("<table id='t01'>" +
                         "<tr>" +
-                            "<th>Key</th>" +
-                            "<th>Value</th>" + 
+                            "<th colspan='2'>" +
+                                "<a href=https://github.com/NewportDataPortal/newport-crosswalk-survey-2014 target='_blank'>" +
+                                    "Newport Crosswalk Safety Survey (2014)" + 
+                                "</a>" + 
+                            "</th>" +
                         "</tr>" +
                         "<tr>" +
                             "<td>ID</td>" +
@@ -143,6 +136,6 @@ function bpacSurvey2014(feature, layer){
     layer.setIcon(redMarker);
 }
 
-L.geoJSON(bpac_survey_2014, {
-    onEachFeature: bpacSurvey2014
+L.geoJson.ajax('data/bpac_survey_2014.geojson', {
+  onEachFeature: bpacSurvey2014
 }).addTo(map);

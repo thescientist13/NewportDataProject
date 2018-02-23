@@ -18,3 +18,8 @@ html, body, #map {
     color: white;
     background-color: black;
 }
+
+/* visited link */
+a:visited {
+    color: white;
+}
