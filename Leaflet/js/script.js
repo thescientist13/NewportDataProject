@@ -61,21 +61,22 @@ L.marker([51.5, -0.09], {icon: redMarker}).addTo(map);
 
 
 // add some data
-
-function newportHotels(feature, layer){
+// nice leaflet-ajax plugin
+// https://github.com/calvinmetcalf/leaflet-ajax
+var items = [];
+var geojsonLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
+  onEachFeature: function(feature, layer) {
+    items.push(layer);
+    // layer.bindPopup('<h3>' + feature.properties.name + '</h3>');
     layer.bindPopup("<strong>" + feature.properties.name + "</strong><br/>" +
-                    feature.properties.street + "<br/>" +
-                    feature.properties.city + ", " +
-                    feature.properties.state
-                    );
-    layer.setIcon(blueMarker);
-}
+                feature.properties.street + "<br/>" +
+                feature.properties.city + ", " +
+                feature.properties.state
+                );
+  }
+});
 
-
-L.geoJSON(newport_hotels, {
-    onEachFeature: newportHotels
-}).addTo(map);
-
+geojsonLayer.addTo(map);
 
 
 /*
