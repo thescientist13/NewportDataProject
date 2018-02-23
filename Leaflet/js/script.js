@@ -50,11 +50,18 @@ function newportHotels(feature, layer){
                     feature.properties.state
                     );
     layer.setIcon(blueMarker);
+    layer.on('mouseover', function (e) {
+        this.openPopup();
+    });
+    layer.on('mouseout', function (e) {
+        this.closePopup();
+    });
 }
 
 var hotelsLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
   onEachFeature: newportHotels
 }).addTo(map);
+
 
 // Newport Crosswalk Safety Survey (2014) 
 // https://github.com/NewportDataPortal/newport-crosswalk-survey-2014
@@ -98,6 +105,12 @@ function bpacSurvey2014(feature, layer){
                     "</table>"
                     );
     layer.setIcon(redMarker);
+    layer.on('mouseover', function (e) {
+        this.openPopup();
+    });
+    layer.on('mouseout', function (e) {
+        this.closePopup();
+    });
 }
 
 var crosswalksLayer = L.geoJson.ajax('data/bpac_survey_2014.geojson', {
