@@ -29,7 +29,11 @@ var teardrop = new L.Icon({iconUrl: 'marker-icon.png'});
 
 // function basementDweller(feature, layer){
 function onEachFeature(feature, layer){
-    layer.bindPopup("<h1>Hi, I'm an info window</h1>");
+    layer.bindPopup("<strong>" + feature.properties.name + "</strong><br/>" +
+                    feature.properties.street + "<br/>" +
+                    feature.properties.city + ", " +
+                    feature.properties.state
+                    );
     layer.setIcon(teardrop);
 }
 
