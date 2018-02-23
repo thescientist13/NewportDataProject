@@ -1,9 +1,11 @@
 /*css for GeoJSON*/
 
 html, body, #map {
+    z-index: 0;
 	height: 100%;
 	width: 100%;
 	margin: 0;
+	background-color: #bcbcbc;
 }
 
 #t01 tr:nth-child(even) {
@@ -22,4 +24,51 @@ html, body, #map {
 /* visited link */
 a:visited {
     color: white;
+}
+
+#buttons {
+    z-index: 1;
+    width: auto;
+    height: auto;
+    position: absolute;
+}
+
+.layersButton {
+    z-index: 2;
+    padding: 5px;
+    color: white;
+    font-size: 12px;
+    top: 5px;
+    right: 15px;
+    cursor: pointer;
+}
+
+#sidewalksButton {
+    top:2px;
+    height:30px;
+    width: 160px;
+    position: fixed;
+    z-index:3;
+    background-color: blue;
+    
+}
+
+#crosswalksButton {
+    top:42px;
+    height:40px;
+    width: 160px;
+    position: fixed;
+    z-index:3;
+    background-color: red;
+    
+}
+
+#hotelsButton {
+    top:92px;
+    height:40px;
+    width: 160px;
+    position: fixed;
+    z-index:3;
+    background-color: green;
+    
 }

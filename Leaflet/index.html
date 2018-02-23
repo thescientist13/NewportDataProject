@@ -16,18 +16,30 @@
     <!-- copy script tag with sri https://cdnjs.com/libraries/leaflet-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" integrity="sha256-iYUgmrapfDGvBrePJPrMWQZDcObdAcStKBpjP3Az+3s=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" integrity="sha256-CNm+7c26DTTCGRQkM9vp7aP85kHFMqs9MhPEuytF+fQ=" crossorigin="anonymous"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>-->
+    <!--<script src="js/jquery.js"></script>-->
     
     <!-- custom css-->
     <link href="css/style.css" type="text/css" rel="stylesheet">
+    <link href="css/leaflet-legend.css" type="text/css" rel="stylesheet">
    
     <title>NDP Hotels</title>
 </head>
 <body>
     
     <div id="map"></div>
+    <div id="buttons">
+        <div class="layersButton" id="sidewalksButton"><h3>Sidewalks Layer On-Off</h3></div>
+        <div class="layersButton" id="crosswalksButton"><h3>Crosswalks Layer On-Off</h3></div>
+        <div class="layersButton" id="hotelsButton"><h3>Hotels Layer On-Off</h3></div>
+    </div>
+
     <script src="https://rawgit.com/calvinmetcalf/leaflet-ajax/master/dist/leaflet.ajax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
     <script src="js/script.js"></script>
-    <!--<script src="js/shapes.js"></script>-->
+    <!--<script src="js/leaflet-legend.js"></script>-->
+    <!--<script src="js/jquery.js"></script>-->
     <!--<script src="js/geojson.js"></script>-->
     <!--<script src="js/popups.js"></script>-->
     <!--<script src='jscontrol/controls/search.js'></script>-->

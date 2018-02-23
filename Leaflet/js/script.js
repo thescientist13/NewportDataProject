@@ -3,6 +3,9 @@
 
 /*global onMapClick*/
 /*global L*/
+/*global $*/
+/*global polyline*/
+/*global latlng*/
 
 var map = L.map('map', {
     center: [41.488509, -71.315153],
@@ -15,11 +18,24 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18
 }).addTo(map);
 
+/*global map*/
+var popup = L.popup();
+
+// map.on('click', onMapClick);
+
+// function onMapClick(e) {
+//     popup
+//         .setLatLng(e.latlng)
+//         .setContent(e.latlng.toString())
+//         .openOn(map);
+// }
+
+
 // add markers
 
-// blue marker for hotels
+// gren marker for hotels
 var blueMarker = new L.Icon({
-  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -29,9 +45,9 @@ var blueMarker = new L.Icon({
 
 L.marker([0,0], {icon: blueMarker}).addTo(map);
 
-// green marker for walking
+// blue marker for sidewalks
 var greenMarker = new L.Icon({
-  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -70,7 +86,9 @@ function newportHotels(feature, layer){
     layer.setIcon(blueMarker);
 }
 
-L.geoJson.ajax('data/newport_hotels.geojson', {
+// .setContent(e.latlng.toString());
+
+var hotelsLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
   onEachFeature: newportHotels
 }).addTo(map);
 
@@ -118,19 +136,62 @@ function bpacSurvey2014(feature, layer){
     layer.setIcon(redMarker);
 }
 
-L.geoJson.ajax('data/bpac_survey_2014.geojson', {
+var crosswalksLayer = L.geoJson.ajax('data/bpac_survey_2014.geojson', {
   onEachFeature: bpacSurvey2014
 }).addTo(map);
 
 
 // add sidewalks layer
 // npt-sidewalks.geojson is a map of all sidewalks.
+
 var sidewalks = [];
 
-L.geoJson.ajax('data/npt-sidewalks.geojson', {
+var sidewalksLayer = L.geoJson.ajax('data/npt-sidewalks.geojson', {
   onEachFeature: function(data, layer) {
     sidewalks.push(layer);
   }
 }).addTo(map);
 
 
+
+// add legend for marker colors
+// var Legend =  new L.Control.Legend({
+//         position: 'topleft',
+//         collapsed: true,
+//         controlButton: {
+//             title: "Legend"
+//         }});
+// map.addControl( Legend );
+ 
+// $(".legend-container").append( $("#legend") );
+// $(".legend-toggle").append( "<i class='legend-toggle-icon fa fa-info fa-2x' style='color: #000'></i>" );
+
+$(document).ready(function (e) {
+    $("#sidewalksButton").show();
+    $("#sidewalksButton").click(function(){
+        if(map.hasLayer(sidewalksLayer)){
+            map.removeLayer(sidewalksLayer);
+        } else {
+            map.addLayer(sidewalksLayer);
+        }
+    });
+    
+    $("#crosswalksButton").show();
+    $("#crosswalksButton").click(function(){
+        if(map.hasLayer(crosswalksLayer)){
+            map.removeLayer(crosswalksLayer);
+        } else {
+            map.addLayer(crosswalksLayer);
+        }
+    });
+    
+    $("#hotelsButton").show();
+    $("#hotelsButton").click(function(){
+        if(map.hasLayer(hotelsLayer)){
+            map.removeLayer(hotelsLayer);
+        } else {
+            map.addLayer(hotelsLayer);
+        }
+    });
+    e.preventDefault();
+})
