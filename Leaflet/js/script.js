@@ -87,9 +87,7 @@ function newportHotels(feature, layer){
 
 var geojsonLayer = L.geoJson.ajax('data/newport_hotels.geojson', {
   onEachFeature: newportHotels
-});
-
-geojsonLayer.addTo(map);
+}).addTo(map);
 
 
 /*
